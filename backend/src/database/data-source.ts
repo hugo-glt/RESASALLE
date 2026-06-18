@@ -4,12 +4,12 @@ import { DataSource } from "typeorm";
 export const AppDataSource = new DataSource({
     type: "mariadb",
     host: "localhost",
-    port: 3307,
+    port: 3306,
     username: "root",
     password: "",
-    database: "resasalledb",
-    entities: ["src/entity/*.ts"],
-    migrations: ["src/migrations/*.ts"],
+    database: "resasalledb2",
+    entities: ["src/entities/*.ts"],
+    migrations: ["src/database/migrations/*.ts"],
     synchronize: false,
     logging: true,
 });
