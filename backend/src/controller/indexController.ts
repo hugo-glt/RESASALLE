@@ -21,4 +21,23 @@ export class UserController {
             return res.status(401).json({ message: "Invalid credentials" });
         }
     }
+
+    async getProfile(req: Request, res: Response) {
+        try {
+            const userId = (req as any).user.id;
+            const user = await this.userService.getProfile(userId);
+            return res.status(200).json({ data: user });
+        } catch (_error) {
+            return res.status(404).json({ message: "User not found" });
+        }
+    }
+
+    async logout(req: Request, res: Response) {
+        try {
+            const result = this.userService.logout(res);
+            return res.status(200).json(result);
+        } catch (_error) {
+            return res.status(500).json({ message: "Logout failed" });
+        }
+    }
 }

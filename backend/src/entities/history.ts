@@ -8,17 +8,17 @@ export class History {
 
     @Column({
         type: "enum",
-        enum: ["CREATE", "MODIFICATION", "SUPRESSION", "CANCEL"],
+        enum: ["CREATE", "MODIFICATION", "SUPRESSION", "CANCEL", "LOGIN","LOGOUT"],
         name: "actions",
     })
-    actions!: "CREATE" | "MODIFICATION" | "SUPRESSION" | "CANCEL";
+    actions!: "CREATE" | "MODIFICATION" | "SUPRESSION" | "CANCEL" | "LOGIN" | "LOGOUT";
 
     @Column({
         type: "enum",
-        enum: ["CREATE", "MODIFICATION", "SUPRESSION", "CANCEL"],
+        enum: ["CREATE", "MODIFICATION", "SUPRESSION", "CANCEL","LOGIN","LOGOUT"],
         name: "status",
     })
-    status!: "CREATE" | "MODIFICATION" | "SUPRESSION" | "CANCEL";
+    status!: "CREATE" | "MODIFICATION" | "SUPRESSION" | "CANCEL" | "LOGIN" | "LOGOUT";
 
     @Column({name: "id_booking" })
     idBooking!: number;
