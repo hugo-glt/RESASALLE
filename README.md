@@ -45,3 +45,11 @@ Admin Dashboard Wireframe
 [!Capture](/frontend/src/assets/documentation/AdminDashboard_Wireframe1.png)
 [!Capture](/frontend/src/assets/documentation/AdminDashboard_Wireframe2.png)
 
+SHÉMA DE BASE DE DONNÉES
+[!Capture](/frontend/src/assets/documentation/MLD_DDB.png)
+
+CHARTE GRAPHIQUE
+[!Capture](/frontend/src/assets/documentation/Graphic_Charter.png)
+
+ENDPOINTS
+[!Capture](/frontend/src/assets/documentation/EndPoints_Charter.png)
