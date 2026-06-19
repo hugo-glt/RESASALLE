@@ -4,9 +4,14 @@ import { env } from "../config/env";
 import { UserRepository } from "../repositories/UserRepository";
 
 export class UserService {
-    async register(data: { firstname: string; familyname: string; email: string; password: string }) {
+    async register(data: { firstname: string; email: string; password: string; id_roles: string }) {
         const hashedPassword = await bcrypt.hash(data.password, 10);
-        return UserRepository.save({ ...data, password: hashedPassword });
+        return UserRepository.save({ 
+            firstname: data.firstname,
+            email: data.email,
+            password: hashedPassword,
+            role: { id_roles: data.id_roles },
+        });
     }
 
     async login(data: { email: string; password: string }) {
@@ -18,7 +23,7 @@ export class UserService {
         const valid = await bcrypt.compare(data.password, user.password);
         if (!valid) throw new Error("Invalid credentials");
         const token = jwt.sign(
-            { id: user.idUsers, email: user.email, role: user.role?.names },
+            { id: user.id_users, email: user.email, role: user.role?.names },
             env.jwtSecret!,
             { expiresIn: "1h" },
         );
@@ -27,7 +32,7 @@ export class UserService {
 
     async getProfile(userId: number) {
         const user = await UserRepository.findOne({
-            where: { idUsers: userId },
+            where: { id_users: userId },
             relations: { role: true },
         });
         if (!user) throw new Error("User not found");

@@ -6,7 +6,7 @@ import { LargeNumberLike } from "node:crypto";
 @Entity("Users")
 export class User {
     @PrimaryGeneratedColumn()
-    idUsers!: number;
+    id_users!: number;
 
     @Column({ type: "varchar", length: 50, name: "firstname" })
     firstname!: string;
@@ -17,9 +17,6 @@ export class User {
     @Column({ type: "varchar", length: 80, name: "email" })
     email!: string;
 
-    @Column({ type: "varchar", length: 50, name: "id_roles" })
-    id_roles!: string;
-
     @ManyToOne(
         () => Role,
         (role) => role.users,
@@ -28,6 +25,7 @@ export class User {
     @JoinColumn({ name: "id_roles" })
     role!: Role;
     // Role!= !Mandatory Input// 
+    
     @OneToMany(
         () => Booking,
         (booking) => booking.user,

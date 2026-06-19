@@ -26,7 +26,7 @@ export class Booking {
     subject!: string;
 
     @Column({ name: "id_users", nullable: true })
-    idUsers!: number | null;
+    id_users!: number | null;
 
     @Column({name: "id_rooms" })
     id_rooms!: number;

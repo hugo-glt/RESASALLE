@@ -12,8 +12,8 @@ async function seed() {
         email: "super@mail.com",
         id_roles: "R3",
 
-    });
-    await repository.save([SuperAdmin]);
+    } as any);
+    await repository.save(SuperAdmin);
     console.log("Seed for User Super Admin Applied");
     await AppDataSource.destroy();
 }

@@ -9,7 +9,8 @@ export class UserController {
             const user = await this.userService.register(req.body);
             return res.status(201).json({ message: "Created", data: user });
         } catch (error) {
-            return res.status(400).json({ message: "Error", error });
+            console.log("ERREUR REGISTER:", error);
+            return res.status(400).json({ message: "Error", error: error instanceof Error ? error.message : error });
         }
     }
 

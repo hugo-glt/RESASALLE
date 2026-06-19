@@ -31,7 +31,7 @@ export class BookingService {
             timeslotend: data.timeslotend,
             subject: data.subject,
             id_rooms: data.id_rooms,
-            idUsers: userId,
+            id_users: userId,
         });
 
         // post in history
