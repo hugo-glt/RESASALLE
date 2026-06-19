@@ -32,3 +32,16 @@ Fonctionnalités implémentées
     Disponibilités	Liste des salles libres pour un créneau donné
     Feed du jour	Affiche toutes les réservations du jour triées par horaire
     Historique	Trace de toutes les actions (login, logout, création de réservation)
+
+WIREFRAME 
+
+Login Wireframe
+[!Capture](/frontend/src/assets/documentation/Login_Wireframe.png)
+
+User/ Homepage Wireframe
+[!Capture](/frontend/src/assets/documentation/User_Wireframe.png)
+
+Admin Dashboard Wireframe
+[!Capture](/frontend/src/assets/documentation/AdminDashboard_Wireframe1.png)
+[!Capture](/frontend/src/assets/documentation/AdminDashboard_Wireframe2.png)
+
