@@ -36,20 +36,20 @@ Fonctionnalités implémentées
 WIREFRAME 
 
 Login Wireframe
-[!Capture](/frontend/src/assets/documentation/Login_Wireframe.png)
+[!Capture](/documentation/Login_Wireframe.png)
 
 User/ Homepage Wireframe
-[!Capture](/frontend/src/assets/documentation/User_Wireframe.png)
+[!Capture](/documentation/User_Wireframe.png)
 
 Admin Dashboard Wireframe
-[!Capture](/frontend/src/assets/documentation/AdminDashboard_Wireframe1.png)
-[!Capture](/frontend/src/assets/documentation/AdminDashboard_Wireframe2.png)
+[!Capture](/documentation/AdminDashboard_Wireframe1.png)
+[!Capture](/documentation/AdminDashboard_Wireframe2.png)
 
 SHÉMA DE BASE DE DONNÉES
-[!Capture](/frontend/src/assets/documentation/MLD_DDB.png)
+[!Capture](/documentation/MLD_DDB.png)
 
 CHARTE GRAPHIQUE
-[!Capture](/frontend/src/assets/documentation/Graphic_Charter.png)
+[!Capture](/documentation/Graphic_Charter.png)
 
 ENDPOINTS
-[!Capture](/frontend/src/assets/documentation/EndPoints_Charter.png)
+[!Capture](/documentation/EndPoints_Charter.png)
