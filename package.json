@@ -17,5 +17,8 @@
     "jest": "^30.4.2",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.11"
+  },
+  "dependencies": {
+    "v-calendar": "^3.1.2"
   }
 }
