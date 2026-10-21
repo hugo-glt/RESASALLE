@@ -2,8 +2,14 @@
 import FeedBox from '../../layouts/FeedBox.vue';
 import FilterDropdown from '../../layouts/SortingDropdown.vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const filterOpen = ref(false)
+const router = useRouter()
+
+function goSearch() {
+    router.push('/teachers/search')
+}
 </script>
 
 <template>
@@ -20,7 +26,7 @@ const filterOpen = ref(false)
                 <img src="../../assets/icons/logs-svgrepo-com.svg" class="w-5 h-5" />
                 <span class="ml-2">LOGS</span>
             </button>
-            <button>
+            <button @click="goSearch">
                 <img src="../../assets/icons/plus-large-svgrepo-com.svg" class="w-5 h-5" />
                 <span class="ml-2">ADD</span>
             </button>
