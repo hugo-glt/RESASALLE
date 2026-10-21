@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import FeedBox from '../../layouts/FeedBox.vue';
+import FilterDropdown from '../../layouts/SortingDropdown.vue';
+import { ref } from 'vue';
+
+const filterOpen = ref(false)
 </script>
 
 <template>
@@ -20,10 +24,16 @@ import FeedBox from '../../layouts/FeedBox.vue';
                 <img src="../../assets/icons/plus-large-svgrepo-com.svg" class="w-5 h-5" />
                 <span class="ml-2">ADD</span>
             </button>
+            <div class="relative">
+            <FilterDropdown
+                :open="filterOpen"
+                @close="filterOpen = false"
+                class="absolute top-12 left-0 z-3"/>
+            </div>
         </div>
     </section>
     <section>
-        <FeedBox />
+        <FeedBox  @toggle-filter="filterOpen = !filterOpen" />
     </section>
     </div>
 </template>
