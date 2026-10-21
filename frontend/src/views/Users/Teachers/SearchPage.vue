@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
+import FeedBox from '../../../layouts/FeedBox.vue';
 
 const router = useRouter()
 const dropdownOpen = ref(false)
@@ -10,7 +11,6 @@ const equipment = ref('')
 const modularEnabled = ref(false)
 const selectedDate = ref<Date | null>(null)
 
-function toggleDropdown() { dropdownOpen.value = !dropdownOpen.value }
 function closeDropdown() { dropdownOpen.value = false }
 function cancelSearch() {
     router.push('/')
@@ -75,16 +75,9 @@ function cancelSearch() {
                 </div>
             </section>
         </div>
-        <section class="w-125 h-125 bg-gray-300 relative">
-            <div class="flex justify-center gap-20 mt-2">
-                <img src="../../../assets/icons/arrow-left-svgrepo-com.svg" class="w-5 h-5">
-                <img src="../../../assets/icons/arrow-right-svgrepo-com.svg" class="w-5 h-5">
-                <div @click="toggleDropdown" class="flex flex-col items-start">
-                    <img src="../../../assets/icons/funnel-sort-svgrepo-com.svg" class="w-5 h-5 right-5" />
-                </div>
-            </div>
-            <div class="flex justify-center">
-                <div class="w-110 h-1 bg-gray-500"></div>
+        <section>
+            <div>
+                <FeedBox />
             </div>
             <div>
                 <button @click="cancelSearch">
