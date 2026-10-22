@@ -34,7 +34,7 @@ function goSearch() {
             <FilterDropdown
                 :open="filterOpen"
                 @close="filterOpen = false"
-                class="absolute top-12 left-0 z-3"/>
+                class="relative left-5 mt-2 w-80  max-h-[60vh] overflow-y-auto" />
             </div>
         </div>
     </section>

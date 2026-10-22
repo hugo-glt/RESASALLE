@@ -44,5 +44,8 @@ function changeDay(offset: number) {
         </button>
     </div>
     <div class="h-1 bg-gray-600 mt-4 w-full"></div>
+    <section>
+        <!-- Contenu du feed-->
+    </section>
 </section>
 </template>
