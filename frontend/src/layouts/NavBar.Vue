@@ -17,6 +17,10 @@ function goDashboard() {
     dropdownOpen.value = false
     router.push('/dashboard')
 }
+
+function goHomePage() {
+    router.push('/')
+}
 </script>
 
 <template>
@@ -24,7 +28,7 @@ function goDashboard() {
 
         <!-- Left: Logo + Separator -->
         <div class="flex items-center gap-4">
-            <h1 class="font-italic text-[#00334E]">RESASALLE</h1>
+            <h1 @click="goHomePage" class="font-italic text-[#00334E] cursor-pointer">RESASALLE</h1>
             <div class="w-5 h-10 bg-gray-300"></div>
         </div>
 

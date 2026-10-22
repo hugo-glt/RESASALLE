@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import FeedBox from '../../layouts/FeedBox.vue';
+import FilterDropdown from '../../layouts/SortingDropdown.vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const filterOpen = ref(false)
+const router = useRouter()
+
+function goSearch() {
+    router.push('/teachers/search')
+}
 </script>
 
 <template>
@@ -16,17 +26,20 @@
                 <img src="../../assets/icons/logs-svgrepo-com.svg" class="w-5 h-5" />
                 <span class="ml-2">LOGS</span>
             </button>
-            <button>
+            <button @click="goSearch">
                 <img src="../../assets/icons/plus-large-svgrepo-com.svg" class="w-5 h-5" />
                 <span class="ml-2">ADD</span>
             </button>
+            <div class="relative">
+            <FilterDropdown
+                :open="filterOpen"
+                @close="filterOpen = false"
+                class="relative left-5 mt-2 w-80  max-h-[60vh] overflow-y-auto" />
+            </div>
         </div>
     </section>
     <section>
-        <div class="w-75 h-100 bg-gray-300 relative">
-            <img src="../../assets/icons/funnel-sort-svgrepo-com.svg" class="w-5 h-5" />
-            <div class="w-60 h-1 bg-gray-500"></div>
-        </div>
+        <FeedBox  @toggle-filter="filterOpen = !filterOpen" />
     </section>
     </div>
 </template>

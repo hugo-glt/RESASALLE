@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { describe, it, expect } from "@jest/globals";
 
 describe("UserService", () => {
     describe("register", () => {
