@@ -12,6 +12,12 @@ const formattedDate = computed(() =>
         year: 'numeric',
     })
 )
+
+function changeDay(offset: number) {
+    const d = new Date(currentDate.value)
+    d.setDate(d.getDate() + offset)
+    currentDate.value = d
+}
 </script>
 
 <template>
@@ -19,9 +25,17 @@ const formattedDate = computed(() =>
     <div class="flex items-center justify-between">
         <!-- Flèches à gauche -->
         <div class="flex items-center gap-4">
-            <img src="../assets/icons/arrow-left-svgrepo-com.svg" class="w-5 h-5" />
-            <span class="font-semibold capitalize">{{ formattedDate }}</span>
-            <img src="../assets/icons/arrow-right-svgrepo-com.svg" class="w-5 h-5" />
+            <!-- Jour précédent -->
+                <button @click="changeDay(-1)" class="cursor-pointer" aria-label="Jour précédent">
+                    <img src="../assets/icons/arrow-left-svgrepo-com.svg" class="w-5 h-5" />
+                </button>
+
+                <span class="font-semibold capitalize">{{ formattedDate }}</span>
+
+                <!-- Jour suivant -->
+                <button @click="changeDay(1)" class="cursor-pointer" aria-label="Jour suivant">
+                    <img src="../assets/icons/arrow-right-svgrepo-com.svg" class="w-5 h-5" />
+                </button>
         </div>
 
         <!-- Funnel à droite -->
