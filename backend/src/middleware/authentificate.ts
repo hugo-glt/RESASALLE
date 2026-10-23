@@ -10,6 +10,6 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
         (req as any).user = jwt.verify(token, env.jwtSecret!);
         next();
     } catch {
-        return res.status(403).json({ message: "Invalid token" });
+        return res.status(401).json({ message: "Invalid or expired token" });
     }
 }
