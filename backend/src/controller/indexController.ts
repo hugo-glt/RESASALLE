@@ -6,7 +6,11 @@ export class UserController {
 
     async register(req: Request, res: Response) {
         try {
-            const user = await this.userService.register(req.body);
+            const user = await (
+                this.userService as unknown as {
+                    register: (body: Request["body"]) => Promise<unknown>;
+                }
+            ).register(req.body);
             return res.status(201).json({ message: "Created", data: user });
         } catch (error) {
             console.log("ERREUR REGISTER:", error);
@@ -27,7 +31,8 @@ export class UserController {
         try {
             const userId = (req as any).user.id;
             const user = await this.userService.getProfile(userId);
-            return res.status(200).json({ data: user });
+            const { password, ...safeUser } = user;
+            return res.status(200).json({ data: safeUser });
         } catch (_error) {
             return res.status(404).json({ message: "User not found" });
         }
