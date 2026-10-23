@@ -1,7 +1,6 @@
 import { Column, Entity, Generated, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Booking } from "./booking";
 import { Role } from "./roles";
-import { LargeNumberLike } from "node:crypto";
 
 @Entity("Users")
 export class User {
@@ -14,7 +13,7 @@ export class User {
     @Column({ type: "varchar", length: 255, name: "password" })
     password!: string;
 
-    @Column({ type: "varchar", length: 80, name: "email" })
+    @Column({ type: "varchar", length: 80, name: "email", unique: true })
     email!: string;
 
     @ManyToOne(
