@@ -14,7 +14,7 @@ export class Booking {
     idBooking!: number;
 
     @Column({ type: "date", nullable: true, name: "dates" })
-    dates!: Date | null;
+    dates!: string;
 
     @Column({ type: "time", name: "time_slot_start" })
     timeslotstart!: string;
