@@ -27,4 +27,19 @@ export class BookingController {
             return res.status(400).json({ message: "Error", error });
         }
     }
+
+    async getByDate(req: Request, res: Response) {
+    const date = req.query.date as string | undefined;
+    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        return res.status(400).json({ message: "date=YYYY-MM-DD required" });
+    }
+    try {
+        const bookings = await this.bookingService.getBookingsByDate(date);
+        return res.status(200).json({ data: bookings });
+    } catch (error) {
+        return res.status(400).json({ message: "Error" });
+    }
 }
+
+}
+
