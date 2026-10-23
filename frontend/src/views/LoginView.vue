@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { useUserStore } from '../composables/useUserStore';
 import { useRouter } from 'vue-router';
+export type RoleName = 'Student' | 'Teacher' | 'Admin'
+export interface User {
+    id_users: number
+    firstname: string
+    email: string
+    role: { id_roles: string; names: RoleName }
+}
 
 const router = useRouter()
 const { selectedUser } = useUserStore()
