@@ -38,4 +38,10 @@ export class Booking {
     @ManyToOne(() => Room, (room) => room.bookings)
     @JoinColumn({ name: "id_rooms" })
     room: Room;
+
+    validateTimeSlot(): void {
+        if (this.timeslotstart >= this.timeslotend) {
+            throw new Error("Invalid time slot: start must be before end");
+        }
+    }
 }
