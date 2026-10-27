@@ -19,19 +19,28 @@ export class UserController {
     }
 
     async login(req: Request, res: Response) {
-        try {
-            const result = await this.userService.login(req.body);
-            return res.status(200).json({ message: "Login successful", ...result });
-        } catch (_error) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
+    try {
+        const { token, user } = await this.userService.login(req.body);
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 1000 * 60 * 60 * 8,
+        });
+
+        return res.status(200).json({ message: "Login successful", user });
+    } catch (error) {
+        console.error("LOGIN ERROR:", error);
+        return res.status(401).json({ message: "Invalid credentials" });
     }
+}
 
     async getProfile(req: Request, res: Response) {
         try {
             const userId = (req as any).user.id;
             const user = await this.userService.getProfile(userId);
-            const { password, ...safeUser } = user;
+            const safeUser = user;
             return res.status(200).json({ data: safeUser });
         } catch (_error) {
             return res.status(404).json({ message: "User not found" });
