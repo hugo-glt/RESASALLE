@@ -7,7 +7,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     try {
-        (req as any).user = jwt.verify(token, env.jwtSecret!);
+        (req as any).user = jwt.verify(token, env.jwtSecret);
         next();
     } catch {
         return res.status(401).json({ message: "Invalid or expired token" });
