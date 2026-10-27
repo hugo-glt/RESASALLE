@@ -1,14 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class MODHistoryLoginLogout1781783403977 implements MigrationInterface {
-    name = 'MODHistoryLoginLogout1781783403977'
+export class UniqueEmailAndBookingDate1793118935682 implements MigrationInterface {
+    name = 'UniqueEmailAndBookingDate1793118935682'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE \`equipment_room\` DROP FOREIGN KEY \`FK_022c376d54da3abb725f500e2c3\``);
-        await queryRunner.query(`ALTER TABLE \`equipment_room\` DROP FOREIGN KEY \`FK_dc65375664e1d2397ead263a42f\``);
-        await queryRunner.query(`DROP INDEX \`IDX_022c376d54da3abb725f500e2c\` ON \`equipment_room\``);
-        await queryRunner.query(`DROP INDEX \`IDX_dc65375664e1d2397ead263a42\` ON \`equipment_room\``);
-        await queryRunner.query(`CREATE TABLE \`Users\` (\`id_users\` int NOT NULL AUTO_INCREMENT, \`firstname\` varchar(50) NOT NULL, \`password\` varchar(255) NOT NULL, \`email\` varchar(80) NOT NULL, \`id_roles\` varchar(50) NOT NULL, PRIMARY KEY (\`id_users\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`Users\` (\`id_users\` int NOT NULL AUTO_INCREMENT, \`firstname\` varchar(50) NOT NULL, \`password\` varchar(255) NOT NULL, \`email\` varchar(80) NOT NULL, \`id_roles\` varchar(50) NOT NULL, UNIQUE INDEX \`IDX_3c3ab3f49a87e6ddb607f3c494\` (\`email\`), PRIMARY KEY (\`id_users\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`Disponibilities\` (\`idDisponibilities\` int NOT NULL AUTO_INCREMENT, \`status\` tinyint NOT NULL, \`reasons\` varchar(500) NOT NULL, \`id_rooms\` int NOT NULL, UNIQUE INDEX \`REL_d85fde6075ffabdc8ceb26e533\` (\`id_rooms\`), PRIMARY KEY (\`idDisponibilities\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`Equipements\` (\`idEquipements\` int NOT NULL AUTO_INCREMENT, \`serial\` int NOT NULL, \`disponibilities\` tinyint NOT NULL, \`description\` varchar(500) NOT NULL, PRIMARY KEY (\`idEquipements\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`Rooms\` (\`id_rooms\` int NOT NULL AUTO_INCREMENT, \`numbers\` int NOT NULL, \`floors\` int NOT NULL, \`buildings\` varchar(50) NOT NULL, \`modularities\` tinyint NOT NULL, \`capacities\` int NOT NULL, PRIMARY KEY (\`id_rooms\`)) ENGINE=InnoDB`);
@@ -67,11 +63,8 @@ export class MODHistoryLoginLogout1781783403977 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE \`Equipements\``);
         await queryRunner.query(`DROP INDEX \`REL_d85fde6075ffabdc8ceb26e533\` ON \`Disponibilities\``);
         await queryRunner.query(`DROP TABLE \`Disponibilities\``);
+        await queryRunner.query(`DROP INDEX \`IDX_3c3ab3f49a87e6ddb607f3c494\` ON \`Users\``);
         await queryRunner.query(`DROP TABLE \`Users\``);
-        await queryRunner.query(`CREATE INDEX \`IDX_dc65375664e1d2397ead263a42\` ON \`equipment_room\` (\`id_equipements\`)`);
-        await queryRunner.query(`CREATE INDEX \`IDX_022c376d54da3abb725f500e2c\` ON \`equipment_room\` (\`id_rooms\`)`);
-        await queryRunner.query(`ALTER TABLE \`equipment_room\` ADD CONSTRAINT \`FK_dc65375664e1d2397ead263a42f\` FOREIGN KEY (\`id_equipements\`) REFERENCES \`equipements\`(\`idEquipements\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE \`equipment_room\` ADD CONSTRAINT \`FK_022c376d54da3abb725f500e2c3\` FOREIGN KEY (\`id_rooms\`) REFERENCES \`rooms\`(\`id_rooms\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
     }
 
 }
