@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { UserService } from "../services/UserService";
+// or UserController.ts, need change
 
 export class UserController {
     constructor(private userService = new UserService()) {}
