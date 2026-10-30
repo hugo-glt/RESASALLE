@@ -30,6 +30,8 @@ export class BookingService {
 
     if (data.timeslotstart >= data.timeslotend) {
     throw new Error("Invalid time slot: start must be before end");
+    
+    console.log("conflit trouvé :", existing, "| params :", data);
     }
 
     // book
