@@ -1,25 +1,35 @@
 import { AppDataSource } from "../database/data-source";
-import type { Request, Response } from "express";
 import { Booking } from "../entities/booking";
 import { History } from "../entities/history";
 
 export class BookingService {
-    bookingService: any;
-    async create(
+  async create(
     data: {
-        dates: string;
-        timeslotstart: string;
-        timeslotend: string;
-        subject: string;
-        id_rooms: number;
+      dates: string;
+      timeslotstart: string;
+      timeslotend: string;
+      subject: string;
+      id_rooms: number;
     },
     userId: number,
-  ) {
+  ): Promise<Booking> {
+    const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
+    const DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+    if (
+      typeof data?.dates !== "string" || !DATE.test(data.dates) ||
+      typeof data.timeslotstart !== "string" || !TIME.test(data.timeslotstart) ||
+      typeof data.timeslotend !== "string" || !TIME.test(data.timeslotend) ||
+      typeof data.subject !== "string" || data.subject.trim() === "" || data.subject.length > 100 ||
+      !Number.isInteger(data.id_rooms)
+    ) {
+      throw new Error("Invalid booking data");
+    }
+
     if (data.timeslotstart >= data.timeslotend) {
       throw new Error("Invalid time slot: start must be before end");
     }
 
-    // Check if room is already booked
     const existing = await AppDataSource.getRepository(Booking)
       .createQueryBuilder("booking")
       .where("booking.id_rooms = :roomId", { roomId: data.id_rooms })
@@ -28,15 +38,11 @@ export class BookingService {
       .andWhere("booking.timeslotend > :start", { start: data.timeslotstart })
       .getOne();
 
-    if (data.timeslotstart >= data.timeslotend) {
-    throw new Error("Invalid time slot: start must be before end");
-    
-    console.log("conflit trouvé :", existing, "| params :", data);
+    if (existing) {
+      throw new Error("Room already booked for this time slot");
     }
 
-    // book
-    const bookingRepo = AppDataSource.getRepository(Booking);
-    const booking = await bookingRepo.save({
+    const booking = await AppDataSource.getRepository(Booking).save({
       dates: data.dates,
       timeslotstart: data.timeslotstart,
       timeslotend: data.timeslotend,
@@ -45,7 +51,6 @@ export class BookingService {
       id_users: userId,
     });
 
-    // post in history
     await AppDataSource.getRepository(History).save({
       actions: "CREATE",
       status: "CREATE",
@@ -55,26 +60,12 @@ export class BookingService {
     return booking;
   }
 
-  async getTodayBookings() {
-    const today = new Date();
-    const date = [
-      today.getFullYear(),
-      String(today.getMonth() + 1).padStart(2, "0"),
-      String(today.getDate()).padStart(2, "0"),
-    ].join("-");
-
-    return AppDataSource.getRepository(Booking).find({
-      where: { dates: date },
-      relations: { room: true, user: true },
-      order: { timeslotstart: "ASC" },
-    });
-  }
-
   async getAvailableRooms(
     date: string,
     timeslotstart: string,
     timeslotend: string,
   ) {
+    // inchangé
     const bookedRoomIds = await AppDataSource.getRepository(Booking)
       .createQueryBuilder("booking")
       .select("booking.id_rooms")
@@ -106,17 +97,4 @@ export class BookingService {
       .orderBy("booking.timeslotstart", "ASC")
       .getMany();
   }
-
-  async getByDate(req: Request, res: Response) {
-    const date = req.query.date as string | undefined;
-    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-        return res.status(400).json({ message: "date=YYYY-MM-DD required" });
-    }
-    try {
-        const bookings = await this.bookingService.getBookingsByDate(date);
-        return res.status(200).json({ data: bookings });
-    } catch {
-        return res.status(400).json({ message: "Error" });
-    }
-}
 }
