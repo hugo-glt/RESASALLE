@@ -42,13 +42,4 @@ export class RoomController {
             return res.status(400).json({ message: "Error", error });
         }
     }
-
-    async getTodayBookings(_req: Request, res: Response) {
-    try {
-        const bookings = await this.bookingService.getTodayBookings();
-        return res.status(200).json({ data: bookings });
-    } catch (error) {
-        return res.status(400).json({ message: "Error", error });
-    }
-}
 }
