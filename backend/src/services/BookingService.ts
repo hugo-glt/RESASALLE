@@ -1,6 +1,7 @@
 import { AppDataSource } from "../database/data-source";
 import { Booking } from "../entities/booking";
 import { History } from "../entities/history";
+import { DATE_RE, TIME_RE, isValidDate } from "../utils/validations";
 
 export class BookingService {
   async create(
@@ -13,11 +14,11 @@ export class BookingService {
     },
     userId: number,
   ): Promise<Booking> {
-    const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
-    const DATE = /^\d{4}-\d{2}-\d{2}$/;
+    const TIME = TIME_RE;
+    const DATE = DATE_RE;
 
     if (
-      typeof data?.dates !== "string" || !DATE.test(data.dates) ||
+      typeof data?.dates !== "string" || !isValidDate(data.dates) ||
       typeof data.timeslotstart !== "string" || !TIME.test(data.timeslotstart) ||
       typeof data.timeslotend !== "string" || !TIME.test(data.timeslotend) ||
       typeof data.subject !== "string" || data.subject.trim() === "" || data.subject.length > 100 ||
