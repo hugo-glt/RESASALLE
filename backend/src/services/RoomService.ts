@@ -1,5 +1,6 @@
 import { AppDataSource } from "../database/data-source";
 import { Room } from "../entities/rooms";
+import { Equipement } from "../entities/equipements";
 
 export class RoomService {
     async search(filters: {
@@ -38,15 +39,33 @@ export class RoomService {
     }
 
     async getFilterOptions() {
-        const buildings = await AppDataSource.query(
-            "SELECT DISTINCT buildings FROM Rooms ORDER BY buildings"
-        );
-        const floors = await AppDataSource.query(
-            "SELECT DISTINCT floors FROM Rooms ORDER BY floors"
-        );
-        const equipements = await AppDataSource.query(
-            "SELECT idEquipements, description FROM Equipements"
-        );
-        return { buildings, floors, equipements };
+        const roomRepo = AppDataSource.getRepository(Room);
+        const distinct = (column: "buildings" | "floors" | "capacities") =>
+            roomRepo
+                .createQueryBuilder("room")
+                .select(`room.${column}`, "value")
+                .distinct(true)
+                .orderBy(`room.${column}`, "ASC")
+                .getRawMany<{ value: string | number }>();
+
+        const [buildings, floors, capacities, equipements] = await Promise.all([
+            distinct("buildings"),
+            distinct("floors"),
+            distinct("capacities"),
+            AppDataSource.getRepository(Equipement).find({
+                select: { idEquipements: true, description: true },
+                order: { description: "ASC" },
+            }),
+        ]);
+
+        return {
+            buildings: buildings.map((building) => String(building.value)),
+            floors: floors.map((floor) => Number(floor.value)),
+            capacities: capacities.map((capacity) => Number(capacity.value)),
+            equipements: equipements.map((equipement) => ({
+                id: equipement.idEquipements,
+                name: equipement.description,
+            })),
+        };
     }
 }
