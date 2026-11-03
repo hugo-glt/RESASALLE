@@ -38,7 +38,7 @@ export class UserService {
         if (!user) throw new Error("Invalid credentials");
 
         const ok = await bcrypt.compare(data.password, user.password);
-        if (!ok) throw new Error("Invalid password"); // temporairily changed to "Invalid password" for clarity, but consider using a more generic message for security reasons.
+        if (!ok) throw new Error("Invalid credentials");
 
         const token = jwt.sign(
             { id: user.id_users, role: user.role?.names },
