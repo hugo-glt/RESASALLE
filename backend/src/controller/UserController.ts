@@ -13,9 +13,11 @@ export class UserController {
                 }
             ).register(req.body);
             return res.status(201).json({ message: "Created", data: user });
-        } catch (error) {
-            console.log("ERREUR REGISTER:", error);
-            return res.status(400).json({ message: "Error", error: error instanceof Error ? error.message : error });
+        } catch (error: any) {
+            console.error("ERREUR REGISTER:", error);
+            const duplicate = error?.message === "Email already used" || error?.code === "ER_DUP_ENTRY";
+            const status = duplicate ? 409 : 400;
+            return res.status(status).json({ message: duplicate ? "Email already used" : "Error" });
         }
     }
 

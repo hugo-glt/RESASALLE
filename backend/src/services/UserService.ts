@@ -10,6 +10,13 @@ export class UserService {
         password: string;
         id_roles: string;
     }) {
+        if (typeof data?.email !== "string" || typeof data.password !== "string") {
+            throw new Error("Invalid user data");
+        }
+
+        const existing = await UserRepository.findOne({ where: { email: data.email } });
+        if (existing) throw new Error("Email already used");
+
         const hashedPassword = await bcrypt.hash(data.password, 10);
         const saved = await UserRepository.save({
             firstname: data.firstname,
@@ -17,6 +24,7 @@ export class UserService {
             password: hashedPassword,
             role: { id_roles: data.id_roles },
         });
+
         const { password, ...safeUser } = saved;
         return safeUser;
     }
@@ -26,13 +34,14 @@ export class UserService {
             where: { email: data.email },
             relations: { role: true },
         });
+
         if (!user) throw new Error("Invalid credentials");
 
         const ok = await bcrypt.compare(data.password, user.password);
         if (!ok) throw new Error("Invalid password"); // temporairily changed to "Invalid password" for clarity, but consider using a more generic message for security reasons.
 
         const token = jwt.sign(
-            { id: user.id_users, role: user.role.names },
+            { id: user.id_users, role: user.role?.names },
             env.jwtSecret,
             { expiresIn: "1h" },
         );
