@@ -2,7 +2,7 @@ import { Column, Entity, Generated, JoinColumn, ManyToOne, OneToMany, PrimaryCol
 import { Booking } from "./booking";
 import { Role } from "./roles";
 
-@Entity("Users")
+@Entity("users")
 export class User {
     @PrimaryGeneratedColumn({ name: "idUsers" })
     id_users!: number;

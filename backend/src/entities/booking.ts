@@ -8,7 +8,7 @@ import {
 import { User } from "./users";
 import { Room } from "./rooms";
 
-@Entity("Booking")
+@Entity("booking")
 export class Booking {
     @PrimaryGeneratedColumn()
     idBooking!: number;
