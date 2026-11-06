@@ -11,7 +11,7 @@ import { Disponibility } from "./disponibilities";
 import { Booking } from "./booking";
 import { Equipement } from "./equipements";
 
-@Entity("Rooms")
+@Entity("rooms")
 export class Room {
     @PrimaryGeneratedColumn()
     id_rooms!: number;

@@ -8,13 +8,13 @@ import {
 import { User } from "./users";
 import { Room } from "./rooms";
 
-@Entity("Booking")
+@Entity("booking")
 export class Booking {
     @PrimaryGeneratedColumn()
     idBooking!: number;
 
     @Column({ type: "date", nullable: true, name: "dates" })
-    dates!: Date | null;
+    dates!: string;
 
     @Column({ type: "time", name: "time_slot_start" })
     timeslotstart!: string;
@@ -38,4 +38,10 @@ export class Booking {
     @ManyToOne(() => Room, (room) => room.bookings)
     @JoinColumn({ name: "id_rooms" })
     room: Room;
+
+    validateTimeSlot(): void {
+        if (this.timeslotstart >= this.timeslotend) {
+            throw new Error("Invalid time slot: start must be before end");
+        }
+    }
 }

@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { Booking } from "./booking";
 
-@Entity("History")
+@Entity("history")
 export class History {
     @PrimaryGeneratedColumn()
     idHistory!: number;
