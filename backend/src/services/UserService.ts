@@ -28,17 +28,28 @@ export class UserService {
         const { password, ...safeUser } = saved;
         return safeUser;
     }
-
+    // temporary console.log to check if the function is called, test purpose only, remove in production
     async login(data: { email: string; password: string }) {
-        const user = await UserRepository.findOne({
-            where: { email: data.email },
-            relations: { role: true },
-        });
+        if (typeof data?.email !== "string" || typeof data?.password !== "string") {
+            console.warn("LOGIN: corps invalide (email ou password absent)");
+            throw new Error("Invalid credentials");
+    }
 
-        if (!user) throw new Error("Invalid credentials");
+    const user = await UserRepository.findOne({
+        where: { email: data.email },
+        relations: { role: true },
+    });
 
-        const ok = await bcrypt.compare(data.password, user.password);
-        if (!ok) throw new Error("Invalid credentials");
+    if (!user) {
+        console.warn("LOGIN: aucun compte pour l'email", data.email);
+        throw new Error("Invalid credentials");
+    }
+
+    const ok = await bcrypt.compare(data.password, user.password);
+        if (!ok) {
+            console.warn("LOGIN: mot de passe incorrect pour", user.email);
+            throw new Error("Invalid credentials");
+    }
 
         const token = jwt.sign(
             { id: user.id_users, role: user.role?.names },
