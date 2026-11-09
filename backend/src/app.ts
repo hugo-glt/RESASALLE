@@ -12,6 +12,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/", routes);
 
+console.log("BOOT backend from:", __dirname); // Remove this line in production, here for test purposes only
+
 AppDataSource.initialize()
     .then(() => {
         console.log("Data Source has been initialized!");
