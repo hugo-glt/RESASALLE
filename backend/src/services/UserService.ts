@@ -54,7 +54,7 @@ export class UserService {
         const token = jwt.sign(
             { id: user.id_users, role: user.role?.names },
             env.jwtSecret,
-            { expiresIn: "1h" },
+            { expiresIn: "8h" },
         );
 
         const { password, ...safeUser } = user;
