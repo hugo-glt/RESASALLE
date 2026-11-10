@@ -1,19 +1,32 @@
 <script setup lang="ts">
-import { useUserStore } from '../composables/useUserStore';
-import { useRouter } from 'vue-router';
-export type RoleName = 'Student' | 'Teacher' | 'Admin'
-export interface User {
-    id_users: number
-    firstname: string
-    email: string
-    role: { id_roles: string; names: RoleName }
-}
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import { useUserStore } from "../composables/useUserStore";
 
-const router = useRouter()
-const { selectedUser } = useUserStore()
+const router = useRouter();
+const { login, role } = useUserStore();
 
-function handleLogin() {
-    router.push({ path: '/' })
+const email = ref("");
+const password = ref("");
+const error = ref("");
+const loading = ref(false);
+const selectedUser = ref<"Student" | "Teacher" | "Admin" | null>(null);
+
+async function submit() {
+    error.value = "";
+    loading.value = true;
+    try {
+        await login(email.value, password.value);
+        router.push(role.value === "Admin" ? "/dashboard" : "/");
+    } catch (e) {
+        error.value =
+            axios.isAxiosError(e) && e.response?.status === 401
+                ? "Identifiants invalides"
+                : "Serveur injoignable, réessaie plus tard";
+    } finally {
+        loading.value = false;
+    }
 }
 </script>
 
@@ -54,7 +67,7 @@ function handleLogin() {
                     </button>
                 </div>
                 <div class="border-2 border-[#00334E] rounded-2xl p-6 w-75">
-                    <form type="submit" class="flex flex-col gap-4" @submit.prevent="handleLogin">
+                    <form class="flex flex-col gap-4" @submit.prevent="submit">
                         <input class="border border-[#00334E] rounded-2xl p-2" type="text" placeholder="Username" />
                         <input class="border border-[#00334E] rounded-2xl p-2" type="password" placeholder="Password" />
                         <button class="bg-[#00334E] text-white rounded-2xl p-2">Login</button>
