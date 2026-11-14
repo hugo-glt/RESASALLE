@@ -24,12 +24,13 @@ export function useUserStore() {
     }
 
     async function logout() {
-        try {
-            await api.post("/logout");
-        } finally {
-            user.value = null;
-        }
+    try {
+        await api.post("/logout");
+    } catch {
+    } finally {
+        user.value = null;
     }
+}
 
     async function fetchMe() {
         try {
