@@ -52,8 +52,13 @@ export class UserController {
 
     async logout(req: Request, res: Response) {
         try {
-            const result = this.userService.logout(res);
+            const result = await this.userService.logout(res);
             return res.status(200).json(result);
+            res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production",
+            });
         } catch (_error) {
             return res.status(500).json({ message: "Logout failed" });
         }
