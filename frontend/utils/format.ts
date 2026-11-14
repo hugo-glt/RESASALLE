@@ -1,0 +1,1 @@
+export const floorLabel = (f: number) => (f === 0 ? 'RDC' : `Étage ${f}`)
