@@ -71,7 +71,7 @@ async function submit() {
 
         <!-- Logo fixé en haut -->
         <div class="logo p-8 pb-0">
-            <h1 class="font-italic text-[#00334E]">RESASALLE</h1>
+            <h1 class="italic text-[#00334E]">RESASALLE</h1>
         </div>
 
         <!-- Contenu centré dans le reste de l'espace -->
