@@ -1,5 +1,44 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Stack Sans Notch", ui-sans-serif, system-ui, sans-serif;
+
+  --color-surface: #E8E8E8;
+  --color-accent: #5588A3;
+  --color-brand: #145374;
+  --color-ink: #00334E;
+  --color-success: #B6E2A1;
+  --color-danger: #DF6A6A;
+}
+
+@layer base {
+  html { font-family: var(--font-sans); }
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+  button:not(:disabled) { cursor: pointer; }
+}
+
+@layer components {
+  .panel { @apply rounded-2xl bg-white p-5 shadow-sm; }
+
+  .btn { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply bg-ink text-white hover:bg-brand; }
+  .btn-secondary { @apply border border-accent bg-white text-ink hover:bg-surface; }
+  .btn-ghost { @apply text-brand underline-offset-2 hover:underline; }
+
+  .field { @apply w-full rounded-xl border border-accent bg-white px-3 py-2 text-ink placeholder:text-ink/50 focus:border-brand disabled:opacity-50; }
+  .field-label { @apply mb-1 block text-sm font-semibold; }
+
+  .alert-error { @apply rounded-xl border border-danger bg-danger/15 px-3 py-2 text-sm; }
+  .alert-success { @apply rounded-xl border border-success bg-success/40 px-3 py-2 text-sm; }
+  .badge { @apply inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+}
+
 body {
   margin: 0;
 }
